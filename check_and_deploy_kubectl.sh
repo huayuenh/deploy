@@ -236,6 +236,7 @@ set +x
 echo "SHOWING last events"
 kubectl get events --sort-by=.metadata.creationTimestamp -n ${CLUSTER_NAMESPACE}
 
+echo "APP_NAME:-IMAGE_NAME ${APP_NAME:-$IMAGE_NAME}"
 # Record deploy information
 if jq -e '.services[] | select(.service_id=="draservicebroker")' _toolchain.json > /dev/null 2>&1; then
   if [ -z "${KUBERNETES_MASTER_ADDRESS}" ]; then
