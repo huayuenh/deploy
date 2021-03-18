@@ -178,7 +178,7 @@ if [ -z "$DEPLOYMENT_DOC_INDEX" ]; then
   DEPLOYMENT_DOC_INDEX=0
 fi
 # Update deployment with image name
-yq write $DEPLOYMENT_FILE --doc $DEPLOYMENT_DOC_INDEX "spec.template.spec.containers[0].image" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}" > ${NEW_DEPLOYMENT_FILE}
+yq write $DEPLOYMENT_FILE --doc $DEPLOYMENT_DOC_INDEX "spec.template.spec.containers[0].image" "us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e" > ${NEW_DEPLOYMENT_FILE}
 DEPLOYMENT_FILE=${NEW_DEPLOYMENT_FILE} # use modified file
 cat ${DEPLOYMENT_FILE}
 
