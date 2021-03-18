@@ -39,7 +39,7 @@ IMAGE_REPOSITORY="us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:4
 # us.icr.io/sample/hello-containers-20190823092122682:1-master-a15bd262-20190823100927
 # or
 # us.icr.io/sample/hello-containers-20190823092122682:1-master-a15bd262-20190823100927@sha256:9b56a4cee384fa0e9939eee5c6c0d9912e52d63f44fa74d1f93f3496db773b2e
-CONTAINERS_JSON=$(kubectl get deployments --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '.items[].spec.template.spec.containers[]? | select(.image | test("'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'(@.+|$)"))')
+CONTAINERS_JSON=$(kubectl get deployments --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '.items[].spec.template.spec.containers[]? | select(.image | test("'"us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"'(@.+|$)"))')
 echo $CONTAINERS_JSON | jq .
 
 LIVENESS_PROBE_PATH=$(echo $CONTAINERS_JSON | jq -r ".livenessProbe.httpGet.path" | head -n 1)
