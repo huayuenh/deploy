@@ -16,6 +16,7 @@
 # Input env variables (can be received via a pipeline environment properties.file.
 REGISTRY_URL="us.icr.io"
 REGISTRY_NAMESPACE="tektonhh"
+IMAGE_NAME="hello-containers-20210316144117933"
 echo "IMAGE_NAME=${IMAGE_NAME}"
 echo "IMAGE_TAG=${IMAGE_TAG}"
 echo "REGISTRY_URL=${REGISTRY_URL}"
@@ -260,7 +261,7 @@ fi
 # or
 # us.icr.io/sample/hello-containers-20190823092122682:1-master-a15bd262-20190823100927@sha256:9b56a4cee384fa0e9939eee5c6c0d9912e52d63f44fa74d1f93f3496db773b2e
 echo "=========================================================="
-APP_NAME=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '[ .items[] | select(.spec.containers[]?.image | test("'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'(@.+|$)")) | .metadata.labels.app] [0]')
+APP_NAME=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '[ .items[] | select(.spec.containers[]?.image | test("'"us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"'(@.+|$)")) | .metadata.labels.app] [0]')
 echo -e "APP: ${APP_NAME}"
 echo "DEPLOYED PODS:"
 kubectl describe pods --selector app=${APP_NAME} --namespace ${CLUSTER_NAMESPACE}
