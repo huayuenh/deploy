@@ -14,6 +14,8 @@
 # image registry (using an IBM Cloud API Key), perform a kubectl deploy of container image and check on outcome.
 
 # Input env variables (can be received via a pipeline environment properties.file.
+REGISTRY_URL="us.icr.io"
+REGISTRY_NAMESPACE="tektonhh"
 echo "IMAGE_NAME=${IMAGE_NAME}"
 echo "IMAGE_TAG=${IMAGE_TAG}"
 echo "REGISTRY_URL=${REGISTRY_URL}"
