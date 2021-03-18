@@ -166,7 +166,7 @@ fi
 
 echo "=========================================================="
 echo "UPDATING manifest with image information"
-IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+IMAGE_REPOSITORY="us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"
 echo -e "Updating ${DEPLOYMENT_FILE} with image name: ${IMAGE_REPOSITORY}:${IMAGE_TAG}"
 NEW_DEPLOYMENT_FILE="$(dirname $DEPLOYMENT_FILE)/tmp.$(basename $DEPLOYMENT_FILE)"
 # find the yaml document index for the K8S deployment definition
