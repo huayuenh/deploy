@@ -232,7 +232,7 @@ else
   STATUS="fail"
 fi
 set +x
-
+echo "DEPLOYMENT_NAME $DEPLOYMENT_NAME"
 # Dump events that occured during the rollout
 echo "SHOWING last events"
 kubectl get events --sort-by=.metadata.creationTimestamp -n ${CLUSTER_NAMESPACE}
