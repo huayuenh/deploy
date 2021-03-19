@@ -119,6 +119,7 @@ spec:
             export IMAGE_TAG="1-master-03d3d03c-20210316144708"
             export REGISTRY_URL="us.icr.io"
             export REGISTRY_NAMESPACE="tektonhh"
+            export IMAGE_DIGEST="@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"
         - name: script
           value: |
             # uncomment to debug the script
