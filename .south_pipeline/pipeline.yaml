@@ -118,7 +118,6 @@ spec:
             export IMAGE_NAME="hello-containers-20210316144117933"
             export IMAGE_TAG="1-master-03d3d03c-20210316144708"
             export REGISTRY_URL="us.icr.io"
-            export IMAGE_DIGEST="@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"
             export REGISTRY_NAMESPACE="tektonhh"
         - name: script
           value: |
