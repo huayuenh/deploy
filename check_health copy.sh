@@ -11,16 +11,11 @@
 # Input env variables (can be received via a pipeline environment properties.file.
 echo "IMAGE_NAME=${IMAGE_NAME}"
 echo "IMAGE_TAG=${IMAGE_TAG}"
-echo "IMAGE_DIGEST=${IMAGE_DIGEST}"
 echo "REGISTRY_URL=${REGISTRY_URL}"
-echo "IMAGE_DIGEST=${IMAGE_DIGEST}"
 echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
 echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
 echo "APP_URL=${APP_URL}"
 
-IMAGE="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}"
-IMAGE="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_DIGEST}"
-IMAGE="us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"
 if [ -z "${APP_URL}" ]; then
   echo "APP_URL env variable not set. Skipping health check !"
   exit 0
@@ -38,12 +33,13 @@ fi
 echo "Check ability to get a kubernetes deployment in ${CLUSTER_NAMESPACE} using kubectl CLI"
 kubectl auth can-i get deployment --namespace ${CLUSTER_NAMESPACE}
 
+IMAGE_REPOSITORY="us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"
 # Ensure that the image match the repository, image name and tag without the @ sha id part to handle
 # case when image is sha-suffixed or not - ie:
 # us.icr.io/sample/hello-containers-20190823092122682:1-master-a15bd262-20190823100927
 # or
 # us.icr.io/sample/hello-containers-20190823092122682:1-master-a15bd262-20190823100927@sha256:9b56a4cee384fa0e9939eee5c6c0d9912e52d63f44fa74d1f93f3496db773b2e
-CONTAINERS_JSON=$(kubectl get deployments --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '.items[].spec.template.spec.containers[]? | select(.image | test("'"${IMAGE}"'(@.+|$)"))')
+CONTAINERS_JSON=$(kubectl get deployments --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '.items[].spec.template.spec.containers[]? | select(.image | test("'"us.icr.io/tektonhh/hello-containers-20210316144117933@sha256:444bff66a9428ebc689a0813e5925166c34f9687ec1258c480c0b3659602d75e"'(@.+|$)"))')
 echo $CONTAINERS_JSON | jq .
 
 LIVENESS_PROBE_PATH=$(echo $CONTAINERS_JSON | jq -r ".livenessProbe.httpGet.path" | head -n 1)
@@ -63,6 +59,9 @@ else
 fi
 
 READINESS_PROBE_PATH=$(echo $CONTAINERS_JSON | jq -r ".readinessProbe.httpGet.path" | head -n 1)
+echo "IMAGE_REPOSITORY $IMAGE_REPOSITORY"
+echo "CONTAINERS_JSON  $CONTAINERS_JSON"
+echo "LIVENESS_PROBE_PATH $LIVENESS_PROBE_PATH"
 echo ".$READINESS_PROBE_PATH."
 # READINESS_PROBE_PORT=$(echo $CONTAINERS_JSON | jq -r ".readinessProbe.httpGet.port" | head -n 1)
 if [ ${READINESS_PROBE_PATH} != null ]; then
