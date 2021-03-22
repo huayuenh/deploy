@@ -95,6 +95,9 @@ spec:
       params:
         - name: repository
           value: $(tasks.extract-repository-url.results.extracted-value)
+        - name: custom-script
+          value: |
+            echo "No op"
         - name: pipeline-debug
           value: $(params.pipeline-debug)
       workspaces:
