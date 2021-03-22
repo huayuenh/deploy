@@ -99,6 +99,7 @@ spec:
           value: |
             # uncomment to debug the script
             # set -x
+            ls
             echo "No op"
         - name: pipeline-debug
           value: $(params.pipeline-debug)
