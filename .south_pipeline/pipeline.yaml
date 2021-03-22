@@ -97,6 +97,8 @@ spec:
           value: $(tasks.extract-repository-url.results.extracted-value)
         - name: custom-script
           value: |
+            # uncomment to debug the script
+            # set -x
             echo "No op"
         - name: pipeline-debug
           value: $(params.pipeline-debug)
