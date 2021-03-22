@@ -94,7 +94,7 @@ spec:
         name: build
       params:
         - name: repository
-          value: $(params.repository)
+          value: $(tasks.extract-repository-url.results.extracted-value)
         - name: custom-script
           value: |
             echo "No op"
